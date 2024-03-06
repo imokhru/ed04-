@@ -1,17 +1,23 @@
 package org.example;
 
 import java.util.*;
+/** clase Agenda
+ * **/
+public class AgendaContactos implements IAgenda {
+    private List<Persona> contacts; // Lista de Persona
 
-public class Agenda {
-    private List<Contacto> contacts; // Lista de Contacto
-
-    public Agenda() {
+    /** Constructor de la clase Agenda **/
+    public AgendaContactos() {
         this.contacts = new ArrayList<>();
     }
-
+    /** añadir el contacto
+     * @param name nombre
+     * @param phone telefono
+     * **/
+    @Override
     public void addContact(String name, String phone) {
         boolean exists = false;
-        for (Contacto c : contacts) {
+        for (Persona c : contacts) {
             if (c.getName().equalsIgnoreCase(name)) {
                 exists = true;
                 c.getPhones().add(phone);
@@ -20,25 +26,33 @@ public class Agenda {
         }
 
         if (!exists) {
-            Contacto newContact = new Contacto(name, phone);
+            Persona newContact = new Persona(name, phone);
             contacts.add(newContact);
         }
     }
-
+    /** borrar el contacto
+     * @param name nombre
+     * @param phone telefono
+     * **/
+    @Override
     public void removeContact(String name) {
-        Iterator<Contacto> it = contacts.iterator();
+        Iterator<Persona> it = contacts.iterator();
 
         while (it.hasNext()) {
-            Contacto c = it.next();
+            Persona c = it.next();
 
             if (c.getName().equalsIgnoreCase(name)) {
                 it.remove();
             }
         }
     }
-
+    /** modificar el telefono
+     * @param name nombre
+     * @param phone telefono
+     * **/
+    @Override
     public void modifyPhoneNumber(String name, String oldPhone, String newPhone) {
-        for (Contacto c : contacts) {
+        for (Persona c : contacts) {
             if (c.getName().equalsIgnoreCase(name)) {
                 List<String> phones = c.getPhones();
 
@@ -50,8 +64,11 @@ public class Agenda {
             }
         }
     }
-
-    public List<Contacto> getContacts() {
+    /** conseguir el contacto
+     * @param name nombre
+     * **/
+    @Override
+    public List<Persona> getContacts() {
         return this.contacts;
     }
 }
